@@ -10,6 +10,8 @@ import {ScrollView,
     StyleSheet
 } from "react-native";
 
+import * as SecureStore from 'expo-secure-store';
+
 class Login extends React.PureComponent {
     constructor(props) {
         super(props)
@@ -19,9 +21,18 @@ class Login extends React.PureComponent {
             token:''}
     }
 
-    botonCambiar = (texto) => {
-        this.setState({hola: texto})
+    nextFieldFocus = () => {
+        this.field2.focus();
     }
+
+    async _setToken() {
+        try {
+            SecureStore.setItemAsync("token",this.state.token)
+            } catch(e) {
+            console.error(e);
+            }
+    }
+
     onLogin() {
         
          fetch('https://tfg-apirest.herokuapp.com/login', {
@@ -41,7 +52,7 @@ class Login extends React.PureComponent {
             }
             else{
                 this.state.token  = response.headers.get('Authorization')
-                console.log(this.state.token) //Quitar
+                SecureStore.setItemAsync("token", response.headers.get('Authorization')) 
                 this.props.navigation.navigate('Home')
             }})
         .catch((error) => {
@@ -59,15 +70,22 @@ class Login extends React.PureComponent {
                 </Text>
                 <TextInput
                     value={this.state.user}
+                    autoCapitalize="none" 
+                    autoCorrect={false}
                     onChangeText={(user) => this.setState({ user })}
                     placeholder={'Username'}
+                    returnKeyType="next"
+                    onSubmitEditing={this.nextFieldFocus}
                     
                 />
                 <TextInput
+                    ref={input => {this.field2 = input}}
                     value={this.state.password}
                     onChangeText={(password) => this.setState({ password })}
                     placeholder={'Password'}
                     secureTextEntry={true}
+                    returnKeyType="go"
+                    onSubmitEditing={this.onLogin.bind(this)}
                     
                 />
                 <View style={{margin:7}} />
@@ -75,7 +93,7 @@ class Login extends React.PureComponent {
                           onPress={this.onLogin.bind(this)}
                           title="Login"
                       />
-                  </View>
+            </View>
             )
         /*return (
             <View style={{ flex: 1 }}>

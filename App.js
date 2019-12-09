@@ -3,6 +3,8 @@ import {
   createAppContainer
 } from "react-navigation";
 
+import * as SecureStore from 'expo-secure-store';
+
 import Login from "./views/Login";
 import Home from "./views/Home";
 
