@@ -10,6 +10,8 @@ import {
     Button 
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
+import CustomRow from "./CustomRow"
+
 
 class Home extends React.PureComponent {
     constructor(props) {
@@ -47,19 +49,8 @@ class Home extends React.PureComponent {
     
     
     renderItem(data) {
-        var imageList = {
-            image_1 : require('../assets/products/1.jpg'),
-            image_11: require('../assets/products/11.jpg'),
-            image_21: require('../assets/products/21.jpg'),
-            image_31: require('../assets/products/31.jpg') 
-        }
 
-        return <TouchableOpacity>
-                    <View>
-                    <Text>{data.item.nombre}</Text>
-                    <Image source={{uri: data.item.image_uri}} style={{width: 50, height: 50}}/>
-                    </View>
-                </TouchableOpacity>
+        return <CustomRow title={data.item.nombre} image_url={data.item.image_uri}/>
     }
     render() {
         if(!this.state.loading) {
@@ -67,7 +58,9 @@ class Home extends React.PureComponent {
                     <View>
                         <Text>Todos los productos</Text>
                     
-                    <FlatList 
+                    <FlatList
+                    horizontal
+                    //ItemSeparatorComponent={()=><View style={{width: 5}}/>} 
                     data={this.state.productsList}
                     renderItem={item=> this.renderItem(item)}
                     keyExtractor={(item) => item.producto_id.toString()} 
