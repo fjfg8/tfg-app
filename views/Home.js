@@ -54,10 +54,11 @@ class Home extends React.PureComponent {
       };
     
     renderItem(data) {
-
-        return <TouchableOpacity onPress={() => { this.props.navigation.navigate('Products') }}>
-            <CustomRow id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri}/>
-            </TouchableOpacity>        
+        const { navigate } = this.props.navigation
+        var item = data.item
+        return <TouchableOpacity onPress={() => {navigate('ProductDetails', {item})}}>
+        <CustomRow id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio}/>
+        </TouchableOpacity>        
             
     }
     render() {
@@ -76,7 +77,18 @@ class Home extends React.PureComponent {
                      
                     />
                     </View>
+                    <View>
+                        <Text>Productos comprados recientemete</Text>
                     
+                    <FlatList
+                    horizontal
+                    //ItemSeparatorComponent={()=><View style={{width: 5}}/>} 
+                    data={this.state.productsList}
+                    keyExtractor={(item) => item.producto_id.toString()}
+                    renderItem={item=> this.renderItem(item)}
+                     
+                    />
+                    </View>
                 </ScrollView>
                     )
         } else {

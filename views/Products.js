@@ -10,7 +10,7 @@ import {
     Button 
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
-import CustomRow from "./CustomRow"
+import CustomRowVertical from "./CustomRowVertical";
 
 
 
@@ -54,8 +54,11 @@ class Products extends React.PureComponent {
     
     
     renderItem(data) {
-
-        return <CustomRow title={data.item.nombre} image_url={data.item.image_uri}/>
+        const { navigate } = this.props.navigation
+        var item = data.item
+        return <TouchableOpacity onPress={() => {navigate('ProductDetails', {item})}}>
+        <CustomRowVertical id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio}/>
+        </TouchableOpacity>
     }
     render() {
         if(!this.state.loading) {

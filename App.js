@@ -22,6 +22,7 @@ const LoginStack = createStackNavigator({
 
 const MainStack = createStackNavigator({
   Home: { screen: Home},
+  ProductDetails: {screen: ProductDetails}
   //Products: {screen: Products}
 });
 MainStack.navigationOptions = {

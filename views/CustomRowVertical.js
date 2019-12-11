@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons'
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
+        flexDirection: 'row',
         padding: 10,
         marginLeft:8,
         marginRight:8,
@@ -21,28 +21,40 @@ const styles = StyleSheet.create({
         color: '#000',
         fontWeight: 'bold'
     },
-    container_text: {
-        //flex: 1,
-        //flexDirection: 'column',
-        alignSelf: "center",
-        justifyContent: 'center',
-    },
-    description: {
-        fontSize: 11,
-        fontStyle: 'italic',
-    },
-    photo: {
-        alignSelf: "center",
-        height: 60,
-        width: 60,
-    },
     pvp: {
         fontSize: 16,
         color: '#000',
     },
+    container_text: {
+        flex: 1,
+        flexDirection: 'column',
+        marginLeft: 12,
+        justifyContent: 'center',
+        
+    },
+    photo: {
+        height: 60,
+        width: 60,
+    },
+    container_button: {
+        flexDirection: 'column',
+        //marginLeft: 12,
+        justifyContent: 'center',
+    },
+    buttonS: {
+       // height: 50,
+       // width: 50,
+       // alignSelf: "center",
+    },
 });
+/*import { FontAwesome } from '@expo/vector-icons';
 
-const CustomRow = ({ id, title, image_url, pvp }) => (
+const myButton = (
+  <FontAwesome.Button name="facebook" backgroundColor="#3b5998" onPress={}>
+    
+  </FontAwesome.Button>
+);*/
+const CustomRowVertical = ({ id, title, image_url, pvp }) => (
     <View style={styles.container}>
         
         <Image source={{ uri: image_url }} style={styles.photo} />
@@ -50,15 +62,16 @@ const CustomRow = ({ id, title, image_url, pvp }) => (
             <Text style={styles.title}>
                 {title} 
             </Text>
-        </View>
-        <View style={styles.container_text}>
             <Text style={styles.pvp}>
                 {pvp} € 
             </Text>
         </View>
+        <View style={styles.container_button}>
+        <Icon name="md-add-circle" size={40} color="#369fe0" onPress={()=>{}} />  
+        </View>
         
-        <Button title="Añadir"></Button> 
+          
     </View>
 );
 
-export default CustomRow;
+export default CustomRowVertical;
