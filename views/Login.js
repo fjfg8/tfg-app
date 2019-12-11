@@ -21,6 +21,10 @@ class Login extends React.PureComponent {
             token:''}
     }
 
+    static navigationOptions = {
+        title: 'Login'
+    }
+
     nextFieldFocus = () => {
         this.field2.focus();
     }
@@ -64,10 +68,7 @@ class Login extends React.PureComponent {
     render() {
         return (
             <View style={{padding: 20}}>
-                <Text 
-                    style={{fontSize: 27}}>
-                    Login
-                </Text>
+                
                 <TextInput
                     value={this.state.user}
                     autoCapitalize="none" 
@@ -100,8 +101,8 @@ class Login extends React.PureComponent {
                 <Text >
                     {this.state.hola}
                 </Text>
-                <TouchableOpacity
-                    onPress={() => { this.botonCambiar("Ya te he saludado") }}>
+                <TouchableOpacity this.props.navigation.navigate('Home')
+                    onPress={() => { this.props.navigation.navigate('Home') }}>
                     <Text>
                         Cambiar Texto
                 </Text>

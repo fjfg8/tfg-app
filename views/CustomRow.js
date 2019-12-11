@@ -36,16 +36,16 @@ const styles = StyleSheet.create({
     },
 });
 
-const CustomRow = ({ title, image_url }) => (
+const CustomRow = ({ id,title, image_url }) => (
     <View style={styles.container}>
-        <TouchableOpacity>
+        
         <Image source={{ uri: image_url }} style={styles.photo} />
         <View style={styles.container_text}>
             <Text style={styles.title}>
-                {title}
+                {title} 
             </Text>
         </View>
-        </TouchableOpacity>
+        
         <Button title="Añadir"></Button> 
     </View>
 );

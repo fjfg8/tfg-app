@@ -11,17 +11,20 @@ import {
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import CustomRow from "./CustomRow"
-import { ScrollView } from "react-native-gesture-handler";
 
 
 
-class Home extends React.PureComponent {
+class Products extends React.PureComponent {
     constructor(props) {
         super(props)
         this.state = {
             token:"",
             productsList: [],
             loading: true}
+    }
+
+    static navigationOptions = {
+        title: 'Productos'
     }
     
     componentDidMount() {
@@ -49,35 +52,23 @@ class Home extends React.PureComponent {
         .catch(error=>console.log(error)) //to catch the errors if any
     }
     
-    renderHeader = () => {
-        return <Text>Productos más comprados</Text>;
-      };
     
     renderItem(data) {
 
-        return <TouchableOpacity onPress={() => { this.props.navigation.navigate('Products') }}>
-            <CustomRow id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri}/>
-            </TouchableOpacity>        
-            
+        return <CustomRow title={data.item.nombre} image_url={data.item.image_uri}/>
     }
     render() {
         if(!this.state.loading) {
             return (
-                <ScrollView>
                     <View>
-                        <Text>Productos más comprados</Text>
-                    
                     <FlatList
-                    horizontal
+                    
                     //ItemSeparatorComponent={()=><View style={{width: 5}}/>} 
                     data={this.state.productsList}
-                    keyExtractor={(item) => item.producto_id.toString()}
                     renderItem={item=> this.renderItem(item)}
-                     
+                    keyExtractor={(item) => item.producto_id.toString()} 
                     />
                     </View>
-                    
-                </ScrollView>
                     )
         } else {
             return <ActivityIndicator />
@@ -86,4 +77,4 @@ class Home extends React.PureComponent {
     }
 }
 
-export default (Home);
+export default (Products);
