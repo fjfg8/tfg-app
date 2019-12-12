@@ -56,18 +56,6 @@ class Products extends React.PureComponent {
         .catch(error=>console.log(error)) //to catch the errors if any
     }
 
-    renderHeaderBar = () => {
-        return (      
-            <SearchBar        
-              placeholder="Buscar productos.."        
-              lightTheme        
-              round        
-              onChangeText={text => this.searchFilterFunction(text)}
-              autoCorrect={false}
-              value={this.state.search}            
-            />    
-          )
-    }
 
     searchFilterFunction = text => {    
 
@@ -83,9 +71,35 @@ class Products extends React.PureComponent {
         this.setState({ productsList: newData,
             search: text
          });  
-      }
+    }
     
+    /*filterByCategoryFunction() {
+        const newData = this.arrayholder.filter(item => {      
+            const itemData = item.id_categoria
+            
+             const textData = '2'
+              
+             return itemData == textData    
+          })
+          
+          this.setState({ productsList: newData,
+              
+           });
+    }*/
     
+    renderHeaderBar = () => {
+    return (      
+        <SearchBar        
+            placeholder="Buscar productos.."        
+            lightTheme        
+            round        
+            onChangeText={text => this.searchFilterFunction(text)}
+            autoCorrect={false}
+            value={this.state.search}            
+        />    
+        )
+    }
+
     renderItem(data) {
         const { navigate } = this.props.navigation
         var item = data.item
@@ -106,8 +120,13 @@ class Products extends React.PureComponent {
                     ListHeaderComponent={this.renderHeaderBar} 
                     enableEmptySections
                     />
+                    
                     </View>
                     )
+                    /*return <Button 
+                          onPress={this.filterByCategoryFunction()}
+                          title="Categoria"
+                      />*/
         } else {
             return <ActivityIndicator />
         }
