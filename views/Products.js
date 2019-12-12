@@ -7,10 +7,11 @@ import {
     Image,
     FlatList,
     ActivityIndicator,
-    Button 
+    Button
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import CustomRowVertical from "./CustomRowVertical";
+import {SearchBar} from 'react-native-elements';
 
 
 
@@ -20,7 +21,9 @@ class Products extends React.PureComponent {
         this.state = {
             token:"",
             productsList: [],
-            loading: true}
+            loading: true,
+            search: ''}
+        this.arrayholder = []
     }
 
     static navigationOptions = {
@@ -48,9 +51,39 @@ class Products extends React.PureComponent {
            loading: false,
            productsList: responseJson
           })
+          this.arrayholder = responseJson
         })
         .catch(error=>console.log(error)) //to catch the errors if any
     }
+
+    renderHeaderBar = () => {
+        return (      
+            <SearchBar        
+              placeholder="Buscar productos.."        
+              lightTheme        
+              round        
+              onChangeText={text => this.searchFilterFunction(text)}
+              autoCorrect={false}
+              value={this.state.search}            
+            />    
+          )
+    }
+
+    searchFilterFunction = text => {    
+
+
+        const newData = this.arrayholder.filter(item => {      
+          const itemData = `${item.nombre.toUpperCase()}`
+          
+           const textData = text.toUpperCase()
+            
+           return itemData.indexOf(textData) > -1    
+        })
+        
+        this.setState({ productsList: newData,
+            search: text
+         });  
+      }
     
     
     renderItem(data) {
@@ -69,7 +102,9 @@ class Products extends React.PureComponent {
                     //ItemSeparatorComponent={()=><View style={{width: 5}}/>} 
                     data={this.state.productsList}
                     renderItem={item=> this.renderItem(item)}
-                    keyExtractor={(item) => item.producto_id.toString()} 
+                    keyExtractor={(item) => item.producto_id.toString()}
+                    ListHeaderComponent={this.renderHeaderBar} 
+                    enableEmptySections
                     />
                     </View>
                     )
