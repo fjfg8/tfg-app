@@ -9,11 +9,13 @@ import {
     ActivityIndicator,
     Button,
     Alert,
-    ScrollView
+    ScrollView,
+    DrawerLayoutAndroid
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import CustomRowVertical from "./CustomRowVertical";
 import {SearchBar} from 'react-native-elements';
+
 
 
 
@@ -24,7 +26,9 @@ class Products extends React.PureComponent {
             token:"",
             productsList: [],
             loading: true,
-            search: ''}
+            search: '',
+            categoriesList: []}
+
         this.arrayholder = []
         this.arrayInicial = []
     }
@@ -36,6 +40,7 @@ class Products extends React.PureComponent {
     componentDidMount() {
         this._getToken()
         this.getProducts()
+        this.getCategories()
     }
 
     async _getToken() {
@@ -60,6 +65,17 @@ class Products extends React.PureComponent {
         .catch(error=>console.log(error)) //to catch the errors if any
     }
 
+    getCategories() {
+        fetch('https://tfg-apirest.herokuapp.com/categories')
+        .then(response => response.json())
+        .then((responseJson)=> {
+          this.setState({
+           categoriesList: responseJson
+          })
+        })
+        .catch(error=>console.log(error)) //to catch the errors if any
+    }
+
 
     searchFilterFunction = text => {    
 
@@ -78,6 +94,13 @@ class Products extends React.PureComponent {
     }
     
     filterByCategoryFunction(cat) {
+
+        this.arrayholder = this.arrayInicial
+            this.setState({
+                productsList: this.arrayInicial,
+                search:''
+            })
+
         if (cat != 0) {
             var filtradosCategoria = this.arrayholder.filter(item =>{
                 return item.id_categoria == cat
@@ -86,12 +109,6 @@ class Products extends React.PureComponent {
             this.setState({
                 productsList: filtradosCategoria,
                 search: ''
-            })
-        } else {
-            this.arrayholder = this.arrayInicial
-            this.setState({
-                productsList: this.arrayInicial,
-                search:''
             })
         }
         
@@ -117,10 +134,42 @@ class Products extends React.PureComponent {
         <CustomRowVertical id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio}/>
         </TouchableOpacity>
     }
+
+    renderCategoryItem(data) {
+        
+        var item = data.item
+        return <TouchableOpacity onPress={() => {this.filterByCategoryFunction(data.item.categoria_id),this.refs.drawer.closeDrawer()}}>
+        <Text>{data.item.nombre}</Text>
+        </TouchableOpacity>
+    }
+
+    
     render() {
         if(!this.state.loading) {
+
+            var navigationView = (
+                <View style={{flex: 1, backgroundColor: '#fff'}}>
+                    <TouchableOpacity onPress={() => {this.filterByCategoryFunction(0),this.refs.drawer.closeDrawer()}}>
+                        <Text>Todos los productos</Text>
+                    </TouchableOpacity>
+                  <FlatList
+                    data={this.state.categoriesList}
+                    renderItem={item=> this.renderCategoryItem(item)}
+                    keyExtractor={(item) => item.categoria_id.toString()}
+                   
+                    enableEmptySections
+                    />
+                </View>
+              )
+
             return (
-                    <ScrollView>
+                <DrawerLayoutAndroid
+                    ref="drawer"
+                    drawerWidth={200}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    keyboardDismissMode='on-drag'
+                    renderNavigationView={() => navigationView}>
+                    <View>
                     <FlatList
                     
                     //ItemSeparatorComponent={()=><View style={{width: 5}}/>} 
@@ -135,10 +184,11 @@ class Products extends React.PureComponent {
                           title="Categoria"
                       />
                     <Button 
-                          onPress={()=>{this.filterByCategoryFunction(0)}}
+                          onPress={()=>{this.refs.drawer.openDrawer()}}
                           title="All"
                       />
-                    </ScrollView>
+                    </View>
+                </DrawerLayoutAndroid>
                     )
                      
         } else {
