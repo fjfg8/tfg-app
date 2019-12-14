@@ -7,7 +7,9 @@ import {
     Image,
     FlatList,
     ActivityIndicator,
-    Button
+    Button,
+    Alert,
+    ScrollView
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import CustomRowVertical from "./CustomRowVertical";
@@ -24,6 +26,7 @@ class Products extends React.PureComponent {
             loading: true,
             search: ''}
         this.arrayholder = []
+        this.arrayInicial = []
     }
 
     static navigationOptions = {
@@ -52,6 +55,7 @@ class Products extends React.PureComponent {
            productsList: responseJson
           })
           this.arrayholder = responseJson
+          this.arrayInicial = responseJson
         })
         .catch(error=>console.log(error)) //to catch the errors if any
     }
@@ -73,19 +77,25 @@ class Products extends React.PureComponent {
          });  
     }
     
-    /*filterByCategoryFunction() {
-        const newData = this.arrayholder.filter(item => {      
-            const itemData = item.id_categoria
-            
-             const textData = '2'
-              
-             return itemData == textData    
-          })
-          
-          this.setState({ productsList: newData,
-              
-           });
-    }*/
+    filterByCategoryFunction(cat) {
+        if (cat != 0) {
+            var filtradosCategoria = this.arrayholder.filter(item =>{
+                return item.id_categoria == cat
+            })
+            this.arrayholder = filtradosCategoria
+            this.setState({
+                productsList: filtradosCategoria,
+                search: ''
+            })
+        } else {
+            this.arrayholder = this.arrayInicial
+            this.setState({
+                productsList: this.arrayInicial,
+                search:''
+            })
+        }
+        
+    }
     
     renderHeaderBar = () => {
     return (      
@@ -110,7 +120,7 @@ class Products extends React.PureComponent {
     render() {
         if(!this.state.loading) {
             return (
-                    <View>
+                    <ScrollView>
                     <FlatList
                     
                     //ItemSeparatorComponent={()=><View style={{width: 5}}/>} 
@@ -120,13 +130,17 @@ class Products extends React.PureComponent {
                     ListHeaderComponent={this.renderHeaderBar} 
                     enableEmptySections
                     />
-                    
-                    </View>
-                    )
-                    /*return <Button 
-                          onPress={this.filterByCategoryFunction()}
+                    <Button 
+                          onPress={()=>{this.filterByCategoryFunction(2)}}
                           title="Categoria"
-                      />*/
+                      />
+                    <Button 
+                          onPress={()=>{this.filterByCategoryFunction(0)}}
+                          title="All"
+                      />
+                    </ScrollView>
+                    )
+                     
         } else {
             return <ActivityIndicator />
         }
