@@ -18,7 +18,8 @@ class Login extends React.PureComponent {
         this.state = {
             user: '',
             password: '',
-            token:''}
+            token:'',
+            id:''}
     }
 
     static navigationOptions = {
@@ -55,8 +56,9 @@ class Login extends React.PureComponent {
                 Alert.alert('Usuario o contraseña incorrectos')
             }
             else{
-                this.state.token  = response.headers.get('Authorization')
-                SecureStore.setItemAsync("token", response.headers.get('Authorization')) 
+                SecureStore.setItemAsync("token", response.headers.get('Authorization'))
+                SecureStore.setItemAsync("id",response.headers.get('id'))
+                 
                 this.props.navigation.navigate('Home')
             }})
         .catch((error) => {

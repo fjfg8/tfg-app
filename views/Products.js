@@ -24,6 +24,7 @@ class Products extends React.PureComponent {
         super(props)
         this.state = {
             token:"",
+            userid:"",
             productsList: [],
             loading: true,
             search: '',
@@ -37,15 +38,16 @@ class Products extends React.PureComponent {
         title: 'Productos'
     }
     
-    componentDidMount() {
-        this._getToken()
+    async componentDidMount() {
+        await this._getToken()
         this.getProducts()
         this.getCategories()
     }
 
     async _getToken() {
         try {
-            this.state.token = await SecureStore.getItemAsync("token"); 
+            this.state.token = await SecureStore.getItemAsync("token");
+            this.state.userid = await SecureStore.getItemAsync("id") 
           } catch(e) {
             console.error(e);
           }
@@ -131,7 +133,7 @@ class Products extends React.PureComponent {
         const { navigate } = this.props.navigation
         var item = data.item
         return <TouchableOpacity onPress={() => {navigate('ProductDetails', {item})}}>
-        <CustomRowVertical id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio}/>
+        <CustomRowVertical userid={this.state.userid} id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio}/>
         </TouchableOpacity>
     }
 

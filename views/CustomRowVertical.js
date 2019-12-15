@@ -54,7 +54,7 @@ const myButton = (
     
   </FontAwesome.Button>
 );*/
-const CustomRowVertical = ({ id, title, image_url, pvp }) => (
+const CustomRowVertical = ({userid, id, title, image_url, pvp }) => (
     <View style={styles.container}>
         
         <Image source={{ uri: image_url }} style={styles.photo} />

@@ -13,6 +13,7 @@ import Login from "./views/Login";
 import Home from "./views/Home";
 import Products from "./views/Products";
 import ProductDetails from "./views/ProductDetails"
+import Cart from "./views/Cart"
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
@@ -37,9 +38,18 @@ ProductsStack.navigationOptions = {
   tabBarLabel: 'Productos',
 };
 
+const CartStack = createStackNavigator({
+  Cart: {screen: Cart},
+  ProductDetails: {screen: ProductDetails}
+})
+CartStack.navigationOptions = {
+  tabBarLabel: 'Carrito',
+};
+
 const MainTabs = createBottomTabNavigator({
   Home: MainStack,
-  Products: ProductsStack
+  Products: ProductsStack,
+  Cart: CartStack
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
