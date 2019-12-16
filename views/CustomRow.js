@@ -1,6 +1,62 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, Image, Button, Alert } from 'react-native';
+
+class CustomRow extends React.PureComponent {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            }
+
+        
+    }
+
+    addProductCart() {
+        
+        fetch('https://tfg-apirest.herokuapp.com/cart/add', {
+           method: 'POST',
+           headers: {
+               Accept: 'application/json',
+               'Content-Type': 'application/json',
+           },
+           body: JSON.stringify({
+               userid: this.props.userid,
+               productid: this.props.id,
+               cantidad: "1"
+           }),
+       })
+       .then((response)=>{
+           if(!response.ok){
+               Alert.alert('Error al añadir el producto')
+           }})
+       .catch((error) => {
+           console.error(error);
+         });
+       
+}
+
+//const CustomRow = ({ id, title, image_url, pvp }) => 
+    render() {
+        return(
+        <View style={styles.container}>
+            
+            <Image source={{ uri: this.props.image_url }} style={styles.photo} />
+            <View style={styles.container_text}>
+                <Text style={styles.title}>
+                    {this.props.title} 
+                </Text>
+            </View>
+            <View style={styles.container_text}>
+                <Text style={styles.pvp}>
+                    {this.props.pvp} € 
+                </Text>
+            </View>
+            
+            <Button title="Añadir" onPress={() => {this.addProductCart()}}></Button> 
+        </View>
+        )
+    }
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -41,24 +97,5 @@ const styles = StyleSheet.create({
         color: '#000',
     },
 });
-
-const CustomRow = ({ id, title, image_url, pvp }) => (
-    <View style={styles.container}>
-        
-        <Image source={{ uri: image_url }} style={styles.photo} />
-        <View style={styles.container_text}>
-            <Text style={styles.title}>
-                {title} 
-            </Text>
-        </View>
-        <View style={styles.container_text}>
-            <Text style={styles.pvp}>
-                {pvp} € 
-            </Text>
-        </View>
-        
-        <Button title="Añadir"></Button> 
-    </View>
-);
 
 export default CustomRow;

@@ -15,6 +15,7 @@ import {
 import * as SecureStore from 'expo-secure-store';
 import CustomRowVertical from "./CustomRowVertical";
 import {SearchBar} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Ionicons'
 
 
 
@@ -32,16 +33,40 @@ class Products extends React.PureComponent {
 
         this.arrayholder = []
         this.arrayInicial = []
+        this.drawopen = false
     }
 
-    static navigationOptions = {
+    /*static navigationOptions = {
         title: 'Productos'
-    }
+    }*/
+
+    static navigationOptions = ({ navigation }) => {
+        const {params = {}} = navigation.state
+        return {
+            title: 'Productos',
+            headerLeft: () => (<Icon name="md-funnel" size={35} color="#369fe0" onPress={() => params.openmenu()} style={{marginLeft: 15}} />),
+        };
+      };
     
     async componentDidMount() {
+        this.props.navigation.setParams({ openmenu: this.openMenu })
         await this._getToken()
         this.getProducts()
         this.getCategories()
+        
+    }
+    
+    openMenu = () => {
+        if(!this.drawopen) {
+            this.refs.drawer.openDrawer()
+            
+        }
+        else {
+            this.refs.drawer.closeDrawer()
+            
+        }
+        
+       // Alert.alert('Boton apretado')
     }
 
     async _getToken() {
@@ -169,6 +194,8 @@ class Products extends React.PureComponent {
                     ref="drawer"
                     drawerWidth={200}
                     drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    onDrawerClose={() => this.drawopen = false}
+                    onDrawerOpen={() => this.drawopen = true}
                     keyboardDismissMode='on-drag'
                     renderNavigationView={() => navigationView}>
                     <View>
@@ -181,14 +208,6 @@ class Products extends React.PureComponent {
                     ListHeaderComponent={this.renderHeaderBar} 
                     enableEmptySections
                     />
-                    <Button 
-                          onPress={()=>{this.filterByCategoryFunction(2)}}
-                          title="Categoria"
-                      />
-                    <Button 
-                          onPress={()=>{this.refs.drawer.openDrawer()}}
-                          title="All"
-                      />
                     </View>
                 </DrawerLayoutAndroid>
                     )

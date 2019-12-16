@@ -16,6 +16,7 @@ import ProductDetails from "./views/ProductDetails"
 import Cart from "./views/Cart"
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import ScannerScreen from "./views/ScannerScreen";
 
 const LoginStack = createStackNavigator({
   Login: { screen: Login },
@@ -46,10 +47,20 @@ CartStack.navigationOptions = {
   tabBarLabel: 'Carrito',
 };
 
+const ScannerStack = createStackNavigator({
+  Scanner: {screen: ScannerScreen},
+  ProductDetails: {screen: ProductDetails}
+})
+ScannerStack.navigationOptions = {
+  tabBarLabel: 'Scan',
+};
+
 const MainTabs = createBottomTabNavigator({
   Home: MainStack,
   Products: ProductsStack,
+  Scan: ScannerStack,
   Cart: CartStack
+  
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
@@ -62,6 +73,12 @@ const MainTabs = createBottomTabNavigator({
       } 
       else if (routeName === 'Products') {
         iconName = `ios-options`;
+      }
+      else if (routeName === 'Cart') {
+        iconName = `md-cart`
+      }
+      else if (routeName === 'Scan') {
+        iconName = `md-qr-scanner`
       }
 
       // You can return any component that you like here!

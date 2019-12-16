@@ -51,9 +51,6 @@ class ProductDetails extends React.PureComponent {
            .then((response)=>{
                if(!response.ok){
                    Alert.alert('Error al añadir el producto')
-               }
-               else{
-                   Alert.alert('Producto añadido al carrido')
                }})
            .catch((error) => {
                console.error(error);
