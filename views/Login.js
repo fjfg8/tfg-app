@@ -91,36 +91,18 @@ class Login extends React.PureComponent {
                     onSubmitEditing={this.onLogin.bind(this)}
                     
                 />
-                <View style={{margin:7}} />
-                <Button 
-                          onPress={this.onLogin.bind(this)}
-                          title="Login"
-                      />
+                <View style={{margin:7}} >
+                    <Button 
+                        onPress={this.onLogin.bind(this)}
+                        title="Login"
+                    />
+                    <Button 
+                        onPress={() => {this.props.navigation.navigate('Register')}}
+                        title="Register"
+                    />
+                </View>
             </View>
             )
-        /*return (
-            <View style={{ flex: 1 }}>
-                <Text >
-                    {this.state.hola}
-                </Text>
-                <TouchableOpacity this.props.navigation.navigate('Home')
-                    onPress={() => { this.props.navigation.navigate('Home') }}>
-                    <Text>
-                        Cambiar Texto
-                </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={() => { const { navigate } = this.props.navigation;
-                    navigate('Pantalla2', {
-                    });}}>
-                    <Text>
-                        Cambiar Texto
-                </Text>
-                </TouchableOpacity>
-            </View>
-        )*/
-        
     }
 }
 

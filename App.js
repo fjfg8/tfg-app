@@ -14,12 +14,14 @@ import Home from "./views/Home";
 import Products from "./views/Products";
 import ProductDetails from "./views/ProductDetails"
 import Cart from "./views/Cart"
+import Register from "./views/Register"
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ScannerScreen from "./views/ScannerScreen";
 
 const LoginStack = createStackNavigator({
   Login: { screen: Login },
+  Register: {screen: Register}
 });
 
 const MainStack = createStackNavigator({
