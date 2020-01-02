@@ -55,15 +55,18 @@ class Register extends React.PureComponent {
                     apellidos: this.state.apellidos,
                     email: this.state.email
                 }),
-            })
+            })//then((resp)=>{ return resp.text() }).then((text)=>{ console.log(text) })
             .then((response)=>{
                 if(!response.ok){
-                    Alert.alert('No te has podido registrar, el nick elegido ya existe')
+                    return response.text()
                 }
                 else{
-                    Alert.alert('Registrado correctamente, logueate')
                     this.props.navigation.navigate('Login')
+                    return response.text()
                 }})
+                .then((responsetext)=> {       
+                    Alert.alert(responsetext)
+                    })
             .catch((error) => {
                 console.error(error);
             });

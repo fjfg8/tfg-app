@@ -16,6 +16,13 @@ import * as SecureStore from 'expo-secure-store';
 import CustomRowVertical from "./CustomRowVertical";
 import {SearchBar} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons'
+import {
+    MenuProvider,
+    Menu,
+    MenuTrigger,
+    MenuOptions,
+    MenuOption,
+  } from 'react-native-popup-menu';
 
 
 
@@ -33,7 +40,7 @@ class Products extends React.PureComponent {
 
         this.arrayholder = []
         this.arrayInicial = []
-        this.drawopen = false
+        
     }
 
     /*static navigationOptions = {
@@ -44,30 +51,30 @@ class Products extends React.PureComponent {
         const {params = {}} = navigation.state
         return {
             title: 'Productos',
-            headerLeft: () => (<Icon name="md-funnel" size={35} color="#369fe0" onPress={() => params.openmenu()} style={{marginLeft: 15}} />),
         };
       };
     
     async componentDidMount() {
-        this.props.navigation.setParams({ openmenu: this.openMenu })
+        
         await this._getToken()
         this.getProducts()
         this.getCategories()
         
     }
     
-    openMenu = () => {
-        if(!this.drawopen) {
-            this.refs.drawer.openDrawer()
-            
-        }
-        else {
-            this.refs.drawer.closeDrawer()
-            
-        }
+    // openMenu = () => {
+    //     console.log(this.drawopen)
+    //     if(!this.drawopen) {
+    //         this._drawer.openDrawer()
+    //         //this.drawopen=true
+    //     }
+    //     else {
+    //         this._drawer.closeDrawer()
+    //         //this.drawopen=false
+    //     }
         
-       // Alert.alert('Boton apretado')
-    }
+    //    // Alert.alert('Boton apretado')
+    // }
 
     async _getToken() {
         try {
@@ -142,7 +149,9 @@ class Products extends React.PureComponent {
     }
     
     renderHeaderBar = () => {
-    return (      
+    return (
+        <View>
+              
         <SearchBar        
             placeholder="Buscar productos.."        
             lightTheme        
@@ -150,7 +159,9 @@ class Products extends React.PureComponent {
             onChangeText={text => this.searchFilterFunction(text)}
             autoCorrect={false}
             value={this.state.search}            
-        />    
+        />  
+        
+        </View>  
         )
     }
 
@@ -165,52 +176,75 @@ class Products extends React.PureComponent {
     renderCategoryItem(data) {
         
         var item = data.item
-        return <TouchableOpacity onPress={() => {this.filterByCategoryFunction(data.item.categoria_id),this.refs.drawer.closeDrawer()}}>
+        return <TouchableOpacity onPress={() => {this.filterByCategoryFunction(data.item.categoria_id),this.openMenu()}}>
         <Text>{data.item.nombre}</Text>
         </TouchableOpacity>
+    }
+
+    renderCategoryItemPop(data) {
+        var item = data.item
+        return <MenuOption onSelect={() => this.filterByCategoryFunction(data.item.categoria_id)} text={data.item.nombre} />
     }
 
     
     render() {
         if(!this.state.loading) {
 
-            var navigationView = (
-                <View style={{flex: 1, backgroundColor: '#fff'}}>
-                    <TouchableOpacity onPress={() => {this.filterByCategoryFunction(0),this.refs.drawer.closeDrawer()}}>
-                        <Text>Todos los productos</Text>
-                    </TouchableOpacity>
-                  <FlatList
-                    data={this.state.categoriesList}
-                    renderItem={item=> this.renderCategoryItem(item)}
-                    keyExtractor={(item) => item.categoria_id.toString()}
+            // var navigationView = (
+            //     <View style={{flex: 1, backgroundColor: '#fff'}}>
+            //         <TouchableOpacity onPress={() => {this.filterByCategoryFunction(0),this.openMenu()}}>
+            //             <Text>Todos los productos</Text>
+            //         </TouchableOpacity>
+            //       <FlatList
+            //         data={this.state.categoriesList}
+            //         renderItem={item=> this.renderCategoryItem(item)}
+            //         keyExtractor={(item) => item.categoria_id.toString()}
                    
-                    enableEmptySections
-                    />
-                </View>
-              )
+            //         enableEmptySections
+            //         />
+            //     </View>
+            //   )
 
             return (
-                <DrawerLayoutAndroid
-                    ref="drawer"
-                    drawerWidth={200}
-                    drawerPosition={DrawerLayoutAndroid.positions.Left}
-                    onDrawerClose={() => this.drawopen = false}
-                    onDrawerOpen={() => this.drawopen = true}
-                    keyboardDismissMode='on-drag'
-                    renderNavigationView={() => navigationView}>
+                <MenuProvider>
+                    
                     <View>
+                        <View>
+                        <Menu >
+                        <MenuTrigger triggerTouchable={{activeOpacity: 1}}>
+                        <Icon name="md-funnel" size={35} color="#369fe0" style={{marginLeft: 15}} />
+                        </MenuTrigger>
+                        <MenuOptions>
+                        <FlatList
+                            data={this.state.categoriesList}
+                            renderItem={item=> this.renderCategoryItemPop(item)}
+                            keyExtractor={(item) => item.categoria_id.toString()}
+                            enableEmptySections
+                            />
+                </MenuOptions>
+            </Menu>
+                    <SearchBar        
+                        placeholder="Buscar productos.."        
+                        lightTheme        
+                        round        
+                        onChangeText={text => this.searchFilterFunction(text)}
+                        autoCorrect={false}
+                        value={this.state.search}            
+                    />
+                    
+                    </View>
                     <FlatList
                     
                     //ItemSeparatorComponent={()=><View style={{width: 5}}/>} 
                     data={this.state.productsList}
                     renderItem={item=> this.renderItem(item)}
                     keyExtractor={(item) => item.producto_id.toString()}
-                    ListHeaderComponent={this.renderHeaderBar} 
+                    //ListHeaderComponent={this.renderHeaderBar} 
                     enableEmptySections
                     />
                     </View>
-                </DrawerLayoutAndroid>
-                    )
+                </MenuProvider>
+                )
                      
         } else {
             return <ActivityIndicator />

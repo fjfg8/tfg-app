@@ -7,7 +7,8 @@ import {
     Image,
     FlatList,
     ActivityIndicator,
-    Button 
+    Button,
+    StyleSheet
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import CustomRow from "./CustomRow"
@@ -58,7 +59,7 @@ class Home extends React.PureComponent {
     renderItem(data) {
         const { navigate } = this.props.navigation
         var item = data.item
-        return <TouchableOpacity onPress={() => {navigate('ProductDetails', {item})}}>
+        return <TouchableOpacity onPress={() => {navigate('ProductDetails', {item})}} style={styles.itemflatlist}>
         <CustomRow userid={this.state.userid} id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio}/>
         </TouchableOpacity>        
             
@@ -72,6 +73,7 @@ class Home extends React.PureComponent {
                     
                     <FlatList
                     horizontal
+                    
                     //ItemSeparatorComponent={()=><View style={{width: 5}}/>} 
                     data={this.state.productsList}
                     keyExtractor={(item) => item.producto_id.toString()}
@@ -99,5 +101,13 @@ class Home extends React.PureComponent {
         
     }
 }
+
+const styles = StyleSheet.create({
+    itemflatlist: {
+        //width: 200,
+        //height: 225
+        
+    },
+})
 
 export default (Home);

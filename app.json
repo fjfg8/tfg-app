@@ -4,6 +4,8 @@
     "slug": "tfg",
     "privacy": "public",
     "sdkVersion": "33.0.0",
+    "android": {
+      "package": "com.francompany.tfg"},
     "platforms": [
       "ios",
       "android",

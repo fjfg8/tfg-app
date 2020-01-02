@@ -94,12 +94,6 @@ const MainTabs = createBottomTabNavigator({
   
 });
 
-const MainDrawer = createDrawerNavigator({
-  
-  Home: MainTabs,
-  
-});
-
 
 
 const App = createSwitchNavigator(

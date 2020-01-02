@@ -15,6 +15,10 @@ class ScannerScreen extends React.PureComponent {
     };
   }
 
+  static navigationOptions = {
+    title: 'Bar Scanner'
+}
+
   componentDidMount() {
     this.focusListner = this.props.navigation.addListener(
       'didFocus',
