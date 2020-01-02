@@ -7,15 +7,13 @@ import {
     Image,
     FlatList,
     ActivityIndicator,
-    Button,
     Alert,
-    ScrollView,
-    DrawerLayoutAndroid
+    StyleSheet
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import CustomRowVertical from "./CustomRowVertical";
 import {SearchBar} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/Ionicons'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import {
     MenuProvider,
     Menu,
@@ -208,40 +206,40 @@ class Products extends React.PureComponent {
             return (
                 <MenuProvider>
                     
-                    <View>
-                        <View>
-                        <Menu >
-                        <MenuTrigger triggerTouchable={{activeOpacity: 1}}>
-                        <Icon name="md-funnel" size={35} color="#369fe0" style={{marginLeft: 15}} />
-                        </MenuTrigger>
-                        <MenuOptions>
-                        <FlatList
-                            data={this.state.categoriesList}
-                            renderItem={item=> this.renderCategoryItemPop(item)}
-                            keyExtractor={(item) => item.categoria_id.toString()}
-                            enableEmptySections
+                    <View >
+                        <View >
+                            <Menu>
+                            <MenuTrigger triggerTouchable={{activeOpacity: 1}}>
+                            <FontAwesome5 name="filter" size={35} color="#369fe0" style={{marginLeft: 15}} />
+                            </MenuTrigger>
+                            <MenuOptions>
+                            <FlatList
+                                data={this.state.categoriesList}
+                                renderItem={item=> this.renderCategoryItemPop(item)}
+                                keyExtractor={(item) => item.categoria_id.toString()}
+                                enableEmptySections
+                                />
+                                </MenuOptions>
+                            </Menu>
+                            <SearchBar       
+                                placeholder="Buscar productos.."        
+                                lightTheme        
+                                round        
+                                onChangeText={text => this.searchFilterFunction(text)}
+                                autoCorrect={false}
+                                value={this.state.search}            
                             />
-                </MenuOptions>
-            </Menu>
-                    <SearchBar        
-                        placeholder="Buscar productos.."        
-                        lightTheme        
-                        round        
-                        onChangeText={text => this.searchFilterFunction(text)}
-                        autoCorrect={false}
-                        value={this.state.search}            
-                    />
                     
-                    </View>
-                    <FlatList
-                    
-                    //ItemSeparatorComponent={()=><View style={{width: 5}}/>} 
-                    data={this.state.productsList}
-                    renderItem={item=> this.renderItem(item)}
-                    keyExtractor={(item) => item.producto_id.toString()}
-                    //ListHeaderComponent={this.renderHeaderBar} 
-                    enableEmptySections
-                    />
+                        </View>
+                        <FlatList 
+                        
+                        //ItemSeparatorComponent={()=><View style={{width: 5}}/>} 
+                        data={this.state.productsList}
+                        renderItem={item=> this.renderItem(item)}
+                        keyExtractor={(item) => item.producto_id.toString()}
+                        //ListHeaderComponent={this.renderHeaderBar} 
+                        enableEmptySections
+                        />
                     </View>
                 </MenuProvider>
                 )
@@ -252,5 +250,6 @@ class Products extends React.PureComponent {
         
     }
 }
+
 
 export default (Products);

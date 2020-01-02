@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Button,Alert } from 'react-native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import Icon from 'react-native-vector-icons/Ionicons'
 
-class CustomRowVertical extends React.PureComponent {
+class CustomRowCart extends React.PureComponent {
 
     constructor(props) {
         super(props)
@@ -50,9 +50,12 @@ class CustomRowVertical extends React.PureComponent {
                 <Text style={styles.pvp}>
                     {this.props.pvp} € 
                 </Text>
+                <Text style={styles.pvp}>
+                    {this.props.amount}  
+                </Text>
             </View>
             <View style={styles.container_button}>
-            <FontAwesome5 name="cart-plus" size={25} color="#369fe0" onPress={() => {this.addProductCart()}} />  
+            <Icon name="md-add-circle" size={40} color="#369fe0" onPress={() => {this.addProductCart()}} />  
             </View>
             
             
@@ -107,4 +110,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CustomRowVertical;
+export default CustomRowCart;

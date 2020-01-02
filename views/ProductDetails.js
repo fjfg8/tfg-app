@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, Button, Alert } from 'react-native';
 //import { withNavigationFocus } from "react-navigation"; //Para manejar el boton de atrás
 import * as SecureStore from 'expo-secure-store';
+import NumericInput from 'react-native-numeric-input'
 
 
 
@@ -13,7 +14,8 @@ class ProductDetails extends React.PureComponent {
         this.state = {
             product: navigation.getParam('item', []),
             token: "",
-            userid: ""
+            userid: "",
+            value: 1
             }
     }
 
@@ -45,7 +47,7 @@ class ProductDetails extends React.PureComponent {
                body: JSON.stringify({
                    userid: this.state.userid,
                    productid: this.state.product.producto_id,
-                   cantidad: "1"
+                   cantidad: this.state.value
                }),
            })
            .then((response)=>{
@@ -62,20 +64,27 @@ class ProductDetails extends React.PureComponent {
         return (
             <View style={styles.container}>
         
-            <Image source={{ uri: this.state.product.image_uri }} style={styles.photo} />
-            <View style={styles.container_text}>
-                <Text style={styles.title}>
-                    {this.state.product.nombre} 
-                </Text>
+                <Image source={{ uri: this.state.product.image_uri }} style={styles.photo} />
+                <View style={styles.container_text}>
+                    <Text style={styles.title}>
+                        {this.state.product.nombre} 
+                    </Text>
+                </View>
+                <View style={styles.container_text}>
+                    <Text style={styles.title}>
+                        {this.state.product.precio} €
+                    </Text>
+                </View>
+                <View style={styles.container_buttons}>
+                    <NumericInput value={this.state.value} onChange={value => this.setState({value})} rounded textColor='#2a92d1' 
+                    iconStyle={{ color: 'white' }} 
+                    rightButtonBackgroundColor='#369fe0' 
+                    leftButtonBackgroundColor='#74bce8'
+                    minValue={1}/>
+                    
+                    <Button title="Añadir" onPress={() => {this.addProductCart()}}></Button>
+                </View> 
             </View>
-            <View style={styles.container_text}>
-                <Text style={styles.title}>
-                    {this.state.product.precio} 
-                </Text>
-            </View>
-            
-            <Button title="Añadir" onPress={() => {this.addProductCart()}}></Button> 
-        </View>
                 )
     
     }
@@ -96,8 +105,9 @@ const styles = StyleSheet.create({
         
     },
     title: {
-        fontSize: 16,
+        fontSize: 20,
         color: '#000',
+        fontWeight : 'bold'
     },
     container_text: {
         //flex: 1,
@@ -113,6 +123,10 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         height: 200,
         width: 200,
+    },
+    container_buttons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around'
     },
 });
 

@@ -7,7 +7,8 @@ import {
 import React from "react";
 
 import * as SecureStore from 'expo-secure-store';
-import Ionicons from 'react-native-vector-icons/Ionicons'
+//import Ionicons from 'react-native-vector-icons/Ionicons'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 import Login from "./views/Login";
 import Home from "./views/Home";
@@ -68,19 +69,20 @@ const MainTabs = createBottomTabNavigator({
   defaultNavigationOptions: ({ navigation }) => ({
     tabBarIcon: ({ focused, horizontal, tintColor }) => {
       const { routeName } = navigation.state;
-      let IconComponent = Ionicons;
+      //let IconComponent = Ionicons;
+      let IconComponent = FontAwesome5;
       let iconName;
       if (routeName === 'Home') {
-        iconName = `md-home`;
+        iconName = `home`;
       } 
       else if (routeName === 'Products') {
-        iconName = `ios-options`;
+        iconName = `shopping-bag`;
       }
       else if (routeName === 'Cart') {
-        iconName = `md-cart`
+        iconName = `shopping-cart`
       }
       else if (routeName === 'Scan') {
-        iconName = `md-qr-scanner`
+        iconName = `barcode`
       }
 
       // You can return any component that you like here!

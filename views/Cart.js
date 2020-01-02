@@ -13,8 +13,8 @@ import {
     DrawerLayoutAndroid
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
-import CustomRowVertical from "./CustomRowVertical";
 import { withNavigationFocus } from 'react-navigation';
+import CustomRowCart from "./CustomRowCart";
 
 class Cart extends React.PureComponent {
     constructor(props) {
@@ -73,7 +73,7 @@ class Cart extends React.PureComponent {
         const { navigate } = this.props.navigation
         var item = data.item
         return <TouchableOpacity onPress={() => {navigate('ProductDetails', {item})}}>
-        <CustomRowVertical id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio}/>
+        <CustomRowCart id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio} amount={data.item.cantidad}/>
         </TouchableOpacity>
     }
 

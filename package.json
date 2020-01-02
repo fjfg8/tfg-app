@@ -15,6 +15,7 @@
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-native-elements": "^1.2.7",
+    "react-native-numeric-input": "^1.8.3",
     "react-native-popup-menu": "^0.15.6",
     "react-native-web": "^0.11.4",
     "react-navigation": "^3.11.0"
