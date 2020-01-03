@@ -25,6 +25,7 @@ class Cart extends React.PureComponent {
             loading: true,
             userid:""
             }
+            this.updateProducts = this.updateProducts.bind(this)
     }
 
     static navigationOptions = {
@@ -69,12 +70,32 @@ class Cart extends React.PureComponent {
         .catch(error=>console.log(error)) //to catch the errors if any
     }
 
+    updateProducts() {
+        const url = 'https://tfg-apirest.herokuapp.com/user/' + this.state.userid +'/cart'
+
+        fetch(url)
+        .then(response => response.json())
+        .then((responseJson)=> {
+          this.setState({
+            productsList: responseJson
+          })
+        })
+        .catch(error=>console.log(error)) //to catch the errors if any
+    }
+
+
     renderItem(data) {
         const { navigate } = this.props.navigation
         var item = data.item
         return <TouchableOpacity onPress={() => {navigate('ProductDetails', {item})}}>
-        <CustomRowCart id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio} amount={data.item.cantidad}/>
+        <CustomRowCart updateCart={this.updateProducts} userid={this.state.userid} id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio} amount={data.item.cantidad}/>
         </TouchableOpacity>
+    }
+
+    renderEmptySection() {
+        return <Text>
+            El carrito está vacío. Ve a la pestaña productos y añade los productos que desea comprar.
+        </Text>
     }
 
     render() {
@@ -87,7 +108,7 @@ class Cart extends React.PureComponent {
                     data={this.state.productsList}
                     renderItem={item=> this.renderItem(item)}
                     keyExtractor={(item) => item.producto_id.toString()}
-                    enableEmptySections
+                    ListEmptyComponent = {this.renderEmptySection()}
                     />
                     </View>
                     )

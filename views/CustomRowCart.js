@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Button,Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 class CustomRowCart extends React.PureComponent {
 
@@ -36,6 +36,29 @@ class CustomRowCart extends React.PureComponent {
        
     }
 
+    delProductCart() {
+        fetch('https://tfg-apirest.herokuapp.com/cart/del', {
+           method: 'DELETE',
+           headers: {
+               Accept: 'application/json',
+               'Content-Type': 'application/json',
+           },
+           body: JSON.stringify({
+               userid: this.props.userid,
+               productid: this.props.id,
+           }),
+       })
+       .then((response)=>{
+           if(!response.ok){
+               Alert.alert('Error al eliminar el producto')
+           }
+           this.props.updateCart()
+
+        }).catch((error) => {
+           console.error(error);
+         });
+    }
+
     //const CustomRowVertical = ({userid, id, title, image_url, pvp }) => 
 
     render() {
@@ -55,7 +78,7 @@ class CustomRowCart extends React.PureComponent {
                 </Text>
             </View>
             <View style={styles.container_button}>
-            <Icon name="md-add-circle" size={40} color="#369fe0" onPress={() => {this.addProductCart()}} />  
+            <FontAwesome5 name="trash" size={30} color="#ffc6c4" onPress={() => {this.delProductCart()}} />  
             </View>
             
             
