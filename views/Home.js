@@ -25,6 +25,20 @@ class Home extends React.PureComponent {
             productsList: [],
             loading: true}
     }
+
+    static navigationOptions = {
+        title: 'Recomendaciones',
+        headerTintColor: '#FFF',
+            headerStyle: {
+                backgroundColor: '#369fe0',
+                borderWidth: 0,
+                borderBottomWidth: 2,
+                borderBottomColor: 'black'
+            },headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white'
+            },
+    }
     
     async componentDidMount() {
         await this._getToken()
@@ -52,10 +66,6 @@ class Home extends React.PureComponent {
         .catch(error=>console.log(error)) //to catch the errors if any
     }
     
-    renderHeader = () => {
-        return <Text>Productos más comprados</Text>;
-      };
-    
     renderItem(data) {
         const { navigate } = this.props.navigation
         var item = data.item
@@ -69,7 +79,7 @@ class Home extends React.PureComponent {
             return (
                 <ScrollView>
                     <View>
-                        <Text>Productos más comprados</Text>
+                        <Text style={styles.TitleListText}>Productos más comprados</Text>
                     
                     <FlatList
                     horizontal
@@ -82,7 +92,7 @@ class Home extends React.PureComponent {
                     />
                     </View>
                     <View>
-                        <Text>Productos comprados recientemete</Text>
+                        <Text style={styles.TitleListText}>Productos comprados recientemete</Text>
                     
                     <FlatList
                     horizontal
@@ -103,9 +113,11 @@ class Home extends React.PureComponent {
 }
 
 const styles = StyleSheet.create({
-    itemflatlist: {
-        //width: 200,
-        //height: 225
+    TitleListText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#369fe0',
+        paddingLeft: 8,
         
     },
 })

@@ -29,7 +29,17 @@ class Cart extends React.PureComponent {
     }
 
     static navigationOptions = {
-        title: 'Carrito'
+        title: 'Carrito',
+        headerTintColor: '#FFF',
+        headerStyle: {
+            backgroundColor: '#369fe0',
+            borderWidth: 0,
+            borderBottomWidth: 2,
+            borderBottomColor: 'black'
+        },headerTitleStyle: {
+          fontWeight: 'bold',
+          color: 'white'
+        },
     }
 
     async componentDidMount() {

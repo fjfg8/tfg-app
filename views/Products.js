@@ -51,6 +51,16 @@ class Products extends React.PureComponent {
         const {params = {}} = navigation.state
         return {
             title: 'Productos',
+            headerTintColor: '#FFF',
+            headerStyle: {
+                backgroundColor: '#369fe0',
+                borderWidth: 0,
+                borderBottomWidth: 2,
+                borderBottomColor: 'black'
+            },headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white'
+            },
         };
       };
 

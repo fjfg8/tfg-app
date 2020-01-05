@@ -16,7 +16,17 @@ class ScannerScreen extends React.PureComponent {
   }
 
   static navigationOptions = {
-    title: 'Bar Scanner'
+    title: 'Bar Scanner',
+    headerTintColor: '#FFF',
+        headerStyle: {
+            backgroundColor: '#369fe0',
+            borderWidth: 0,
+            borderBottomWidth: 2,
+            borderBottomColor: 'black'
+        },headerTitleStyle: {
+          fontWeight: 'bold',
+          color: 'white'
+        },
 }
 
   componentDidMount() {

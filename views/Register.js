@@ -27,7 +27,17 @@ class Register extends React.PureComponent {
     }
 
     static navigationOptions = {
-        title: 'Register'
+        title: 'Register',
+        headerTintColor: '#FFF',
+        headerStyle: {
+            backgroundColor: '#369fe0',
+            borderWidth: 0,
+            borderBottomWidth: 2,
+            borderBottomColor: 'black'
+        },headerTitleStyle: {
+          fontWeight: 'bold',
+          color: 'white'
+        },
     }
 
     nextFieldFocus = () => {
