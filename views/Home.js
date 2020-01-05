@@ -59,7 +59,7 @@ class Home extends React.PureComponent {
     renderItem(data) {
         const { navigate } = this.props.navigation
         var item = data.item
-        return <TouchableOpacity onPress={() => {navigate('ProductDetails', {item})}} style={styles.itemflatlist}>
+        return <TouchableOpacity activeOpacity={0.8} onPress={() => {navigate('ProductDetails', {item})}} style={styles.itemflatlist}>
         <CustomRow userid={this.state.userid} id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio}/>
         </TouchableOpacity>        
             

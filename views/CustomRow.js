@@ -1,11 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, Button, Alert, TouchableOpacity } from 'react-native';
+import NumericInput from 'react-native-numeric-input'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+
 
 class CustomRow extends React.PureComponent {
 
     constructor(props) {
         super(props)
         this.state = {
+            value: 1
             }
 
         
@@ -22,7 +26,7 @@ class CustomRow extends React.PureComponent {
            body: JSON.stringify({
                userid: this.props.userid,
                productid: this.props.id,
-               cantidad: "1"
+               cantidad: this.state.value
            }),
        })
        .then((response)=>{
@@ -42,7 +46,7 @@ class CustomRow extends React.PureComponent {
             
             <Image source={{ uri: this.props.image_url }} style={styles.photo} />
             <View style={styles.container_text}>
-                <Text style={styles.title}>
+                <Text numberOfLines={1} style={styles.title}>
                     {this.props.title} 
                 </Text>
             </View>
@@ -51,8 +55,21 @@ class CustomRow extends React.PureComponent {
                     {this.props.pvp} € 
                 </Text>
             </View>
+            <View style={styles.container_buttons}>
+                <NumericInput value={this.state.value} onChange={value => this.setState({value})} rounded textColor='#2a92d1' 
+                    iconStyle={{ color: 'white' }} 
+                    rightButtonBackgroundColor='#369fe0' 
+                    leftButtonBackgroundColor='#74bce8'
+                    minValue={1}
+                    totalHeight={35}/>
+                    <TouchableOpacity onPress={() => {this.addProductCart()}}>
+                    <FontAwesome5 name="cart-plus" size={35} color="#369fe0"  />
+                    </TouchableOpacity>
+                
+                {/* <Button title="Añadir" onPress={() => {this.addProductCart()}}></Button>  */}
+
+            </View>
             
-            <Button title="Añadir" onPress={() => {this.addProductCart()}}></Button> 
         </View>
         )
     }
@@ -70,6 +87,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: '#FFF',
         elevation: 2,
+        width: 200
         
     },
     title: {
@@ -82,6 +100,8 @@ const styles = StyleSheet.create({
         //flexDirection: 'column',
         alignSelf: "center",
         justifyContent: 'center',
+        
+        
     },
     description: {
         fontSize: 11,
@@ -95,6 +115,10 @@ const styles = StyleSheet.create({
     pvp: {
         fontSize: 16,
         color: '#000',
+    },
+    container_buttons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around'
     },
 });
 

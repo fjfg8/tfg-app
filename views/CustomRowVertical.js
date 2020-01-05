@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Button,Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, Button,Alert,TouchableOpacity } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 class CustomRowVertical extends React.PureComponent {
@@ -52,7 +52,9 @@ class CustomRowVertical extends React.PureComponent {
                 </Text>
             </View>
             <View style={styles.container_button}>
-            <FontAwesome5 name="cart-plus" size={25} color="#369fe0" onPress={() => {this.addProductCart()}} />  
+            <TouchableOpacity onPress={() => {this.addProductCart()}}>
+                    <FontAwesome5 name="cart-plus" size={25} color="#369fe0"  />
+                    </TouchableOpacity>  
             </View>
             
             

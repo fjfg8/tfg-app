@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Button,Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, Button,Alert,TouchableOpacity } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 class CustomRowCart extends React.PureComponent {
@@ -78,7 +78,10 @@ class CustomRowCart extends React.PureComponent {
                 </Text>
             </View>
             <View style={styles.container_button}>
-            <FontAwesome5 name="trash" size={30} color="#ffc6c4" onPress={() => {this.delProductCart()}} />  
+            <TouchableOpacity onPress={() => {this.delProductCart()}}>
+            <FontAwesome5 name="trash" size={30} color="#ffc6c4"  />
+                    </TouchableOpacity>
+              
             </View>
             
             

@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, Button, Alert,TouchableOpacity } from 'react-native';
 //import { withNavigationFocus } from "react-navigation"; //Para manejar el boton de atrás
 import * as SecureStore from 'expo-secure-store';
 import NumericInput from 'react-native-numeric-input'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 
 
@@ -76,13 +77,15 @@ class ProductDetails extends React.PureComponent {
                     </Text>
                 </View>
                 <View style={styles.container_buttons}>
-                    <NumericInput value={this.state.value} onChange={value => this.setState({value})} rounded textColor='#2a92d1' 
+                <NumericInput value={this.state.value} onChange={value => this.setState({value})} rounded textColor='#2a92d1' 
                     iconStyle={{ color: 'white' }} 
                     rightButtonBackgroundColor='#369fe0' 
                     leftButtonBackgroundColor='#74bce8'
-                    minValue={1}/>
-                    
-                    <Button title="Añadir" onPress={() => {this.addProductCart()}}></Button>
+                    minValue={1}
+                    totalHeight={40}/>
+                    <TouchableOpacity onPress={() => {this.addProductCart()}}>
+                    <FontAwesome5 name="cart-plus" size={40} color="#369fe0"  />
+                    </TouchableOpacity>
                 </View> 
             </View>
                 )
