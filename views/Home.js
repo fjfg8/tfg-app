@@ -22,8 +22,10 @@ class Home extends React.PureComponent {
         this.state = {
             token:"",
             userid:"",
-            productsList: [],
-            loading: true}
+            recientes: [],
+            masComprados: [],
+            loading: true,
+            loading2: true}
     }
 
     static navigationOptions = {
@@ -43,6 +45,7 @@ class Home extends React.PureComponent {
     async componentDidMount() {
         await this._getToken()
         this.getProducts()
+        this.getProducts2()
     }
 
     async _getToken() {
@@ -55,16 +58,30 @@ class Home extends React.PureComponent {
     }
 
     getProducts() {
-        fetch('https://tfg-apirest.herokuapp.com/products')
+        const url = 'https://tfg-apirest.herokuapp.com/user/' + this.state.userid +'/products-stats-cantidad'
+        fetch(url)
         .then(response => response.json())
         .then((responseJson)=> {
           this.setState({
            loading: false,
-           productsList: responseJson
+           masComprados: responseJson,
           })
         })
         .catch(error=>console.log(error)) //to catch the errors if any
     }
+    getProducts2() {
+        const url = 'https://tfg-apirest.herokuapp.com/user/' + this.state.userid +'/products-stats-fecha'
+        fetch(url)
+        .then(response => response.json())
+        .then((responseJson)=> {
+          this.setState({
+           loading2: false,
+           recientes: responseJson,
+          })
+        })
+        .catch(error=>console.log(error)) //to catch the errors if any
+    }
+
     
     renderItem(data) {
         const { navigate } = this.props.navigation
@@ -75,7 +92,7 @@ class Home extends React.PureComponent {
             
     }
     render() {
-        if(!this.state.loading) {
+        if(!this.state.loading && !this.state.loading2) {
             return (
                 <ScrollView>
                     <View>
@@ -85,7 +102,7 @@ class Home extends React.PureComponent {
                     horizontal
                     
                     //ItemSeparatorComponent={()=><View style={{width: 5}}/>} 
-                    data={this.state.productsList}
+                    data={this.state.masComprados}
                     keyExtractor={(item) => item.producto_id.toString()}
                     renderItem={item=> this.renderItem(item)}
                      
@@ -97,7 +114,7 @@ class Home extends React.PureComponent {
                     <FlatList
                     horizontal
                     //ItemSeparatorComponent={()=><View style={{width: 5}}/>} 
-                    data={this.state.productsList}
+                    data={this.state.recientes}
                     keyExtractor={(item) => item.producto_id.toString()}
                     renderItem={item=> this.renderItem(item)}
                      
@@ -123,3 +140,6 @@ const styles = StyleSheet.create({
 })
 
 export default (Home);
+/*.sort(function(a,b) {
+                        return new Date(b.fecha).getTime() - new Date(a.fecha).getTime();
+                    })}*/

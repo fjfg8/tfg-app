@@ -23,7 +23,8 @@ class Cart extends React.PureComponent {
             token:"",
             productsList: [],
             loading: true,
-            userid:""
+            userid:"",
+            fecha: ""
             }
             this.updateProducts = this.updateProducts.bind(this)
     }
@@ -108,6 +109,43 @@ class Cart extends React.PureComponent {
         </Text>
     }
 
+    renderFooter() {
+      return <Button title='Comprar' onPress= {() => {this.buyProducts()}}></Button>
+    }
+
+    buyProducts() {
+      this.addProductsToStats()
+    }
+
+    addProductsToStats() {
+      var list = this.state.productsList
+      console.log(list[0])
+      //console.log(list.item.userid)
+      list.forEach(function(item) {
+        console.log(item.id_usuario)
+        fetch('https://tfg-apirest.herokuapp.com/products/stats', {
+           method: 'POST',
+           headers: {
+               Accept: 'application/json',
+               'Content-Type': 'application/json',
+           },
+           body: JSON.stringify({
+               userid: item.id_usuario,
+               productid: item.id_producto,
+               cantidad: item.cantidad,
+               fecha: "20-01-15 20:21:24"
+           }),
+       })
+       .then((response)=>{
+           if(!response.ok){
+               Alert.alert('Error al añadir el producto')
+           }})
+       .catch((error) => {
+           console.error(error);
+         });
+      })
+    }
+
     render() {
         if(!this.state.loading) {
 
@@ -119,6 +157,7 @@ class Cart extends React.PureComponent {
                     renderItem={item=> this.renderItem(item)}
                     keyExtractor={(item) => item.producto_id.toString()}
                     ListEmptyComponent = {this.renderEmptySection()}
+                    ListFooterComponent = {this.renderFooter()}
                     />
                     </View>
                     )

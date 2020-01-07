@@ -10,6 +10,8 @@ import {ScrollView,
     StyleSheet
 } from "react-native";
 
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { Input } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
 
 class Login extends React.PureComponent {
@@ -79,19 +81,28 @@ class Login extends React.PureComponent {
 
     render() {
         return (
-            <View style={{padding: 20}}>
+            <View style={styles.container}>
                 
-                <TextInput
+                <Input
                     value={this.state.user}
                     autoCapitalize="none" 
                     autoCorrect={false}
                     onChangeText={(user) => this.setState({ user })}
-                    placeholder={'Username'}
+                    placeholder='Username'
                     returnKeyType="next"
                     onSubmitEditing={this.nextFieldFocus}
-                    
+                    //underlineColorAndroid = '#369fe0'
+                    leftIcon={
+                        <FontAwesome5
+                          name='user'
+                          size={25}
+                          color='#369fe0'
+                        />
+                    }
+                    leftIconContainerStyle = {{marginRight: 10}}
+                    containerStyle = {styles.input}
                 />
-                <TextInput
+                <Input 
                     ref={input => {this.field2 = input}}
                     value={this.state.password}
                     onChangeText={(password) => this.setState({ password })}
@@ -99,17 +110,32 @@ class Login extends React.PureComponent {
                     secureTextEntry={true}
                     returnKeyType="go"
                     onSubmitEditing={this.onLogin.bind(this)}
+                    //underlineColorAndroid = '#369fe0'
+                    leftIcon={
+                        <FontAwesome5
+                          name='lock'
+                          size={25}
+                          color='#369fe0'
+                        />
+                    }
+                    leftIconContainerStyle = {{marginRight: 10}}
+                    containerStyle = {styles.input}
                     
                 />
-                <View style={{margin:7}} >
-                    <Button 
-                        onPress={this.onLogin.bind(this)}
-                        title="Login"
-                    />
-                    <Button 
-                        onPress={() => {this.props.navigation.navigate('Register')}}
-                        title="Register"
-                    />
+                <View style={styles.container_button}>
+                    <FontAwesome5.Button name="sign-in-alt"  backgroundColor = '#369fe0' onPress={this.onLogin.bind(this)}>
+                        <Text style={styles.text_button}>
+                        Iniciar Sesión 
+                        </Text>
+                    </FontAwesome5.Button>
+                    </View>
+                    <View style={styles.container_button}>
+                    <FontAwesome5.Button name="user-plus" backgroundColor = '#369fe0'
+                        onPress={() => {this.props.navigation.navigate('Register')}}>
+                            <Text style={styles.text_button}>
+                                Registrarse
+                            </Text>
+                    </FontAwesome5.Button>
                 </View>
             </View>
             )
@@ -121,16 +147,26 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      padding: 20
       //backgroundColor: '#ecf0f1',
     },
     input: {
      // width: 200,
      // height: 44,
-     // padding: 10,
+      padding: 10,
      // borderWidth: 1,
-     // borderColor: 'black',
-     // marginBottom: 10,
+     // borderColor: 'red',
+      marginBottom: 15,
     },
+    text_button: {
+        fontSize: 15,
+        color: 'white',
+        
+    },
+    container_button: {
+        marginBottom: 10,
+        width: 200
+    }
   });
 
 export default (Login);

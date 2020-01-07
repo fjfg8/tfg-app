@@ -55,7 +55,7 @@ const ScannerStack = createStackNavigator({
   ProductDetails: {screen: ProductDetails}
 })
 ScannerStack.navigationOptions = {
-  tabBarLabel: 'Scan',
+  tabBarLabel: 'Escaner',
 };
 
 const MainTabs = createBottomTabNavigator({

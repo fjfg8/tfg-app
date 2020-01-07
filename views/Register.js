@@ -9,6 +9,8 @@ import {ScrollView,
     Alert,
     StyleSheet
 } from "react-native";
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { Input } from 'react-native-elements';
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -88,19 +90,28 @@ class Register extends React.PureComponent {
 
     render() {
         return (
-            <View style={{padding: 20}}>
+            <View style={styles.container}>
                 
-                <TextInput
+                <Input
                     value={this.state.user}
                     autoCapitalize="none" 
                     autoCorrect={false}
                     onChangeText={(nick) => this.setState({ nick })}
-                    placeholder={'Nick'}
+                    placeholder={'Username'}
                     returnKeyType="next"
                     onSubmitEditing={this.nextFieldFocus}
+                    leftIcon={
+                        <FontAwesome5
+                          name='user'
+                          size={25}
+                          color='#369fe0'
+                        />
+                    }
+                    leftIconContainerStyle = {{marginRight: 10}}
+                    containerStyle = {styles.input}
                     
                 />
-                <TextInput
+                <Input
                     ref={input => {this.field2 = input}}
                     value={this.state.password}
                     onChangeText={(password) => this.setState({ password })}
@@ -108,9 +119,18 @@ class Register extends React.PureComponent {
                     secureTextEntry={true}
                     returnKeyType="next"
                     onSubmitEditing={() => {this.field3.focus()}}
+                    leftIcon={
+                        <FontAwesome5
+                          name='lock'
+                          size={25}
+                          color='#369fe0'
+                        />
+                    }
+                    leftIconContainerStyle = {{marginRight: 10}}
+                    containerStyle = {styles.input}
                     
                 />
-                <TextInput
+                <Input
                     ref={input => {this.field3 = input}}
                     value={this.state.password2}
                     onChangeText={(password2) => this.setState({ password2 })}
@@ -118,9 +138,18 @@ class Register extends React.PureComponent {
                     secureTextEntry={true}
                     returnKeyType="next"
                     onSubmitEditing={() => {this.field4.focus()}}
+                    leftIcon={
+                        <FontAwesome5
+                          name='lock'
+                          size={25}
+                          color='#369fe0'
+                        />
+                    }
+                    leftIconContainerStyle = {{marginRight: 10}}
+                    containerStyle = {styles.input}
                     
                 />
-                <TextInput
+                <Input
                     ref={input => {this.field4 = input}}
                     value={this.state.nombre}
                     autoCapitalize='words' 
@@ -129,9 +158,18 @@ class Register extends React.PureComponent {
                     placeholder={'Nombre'}
                     returnKeyType="next"
                     onSubmitEditing={() => {this.field5.focus()}}
+                    leftIcon={
+                        <FontAwesome5
+                          name='id-card'
+                          size={25}
+                          color='#369fe0'
+                        />
+                    }
+                    leftIconContainerStyle = {{marginRight: 10}}
+                    containerStyle = {styles.input}
                     
                 />
-                <TextInput
+                <Input
                     ref={input => {this.field5 = input}}
                     value={this.state.apellidos}
                     autoCapitalize='words' 
@@ -140,9 +178,18 @@ class Register extends React.PureComponent {
                     placeholder={'Apellidos'}
                     returnKeyType="next"
                     onSubmitEditing={() => {this.field6.focus()}}
+                    leftIcon={
+                        <FontAwesome5
+                          name='id-card'
+                          size={25}
+                          color='#369fe0'
+                        />
+                    }
+                    leftIconContainerStyle = {{marginRight: 10}}
+                    containerStyle = {styles.input}
                     
                 />
-                <TextInput
+                <Input
                     ref={input => {this.field6 = input}}
                     value={this.state.email}
                     autoCapitalize="none" 
@@ -151,13 +198,25 @@ class Register extends React.PureComponent {
                     placeholder={'E-mail'}
                     returnKeyType="go"
                     onSubmitEditing={this.register.bind(this)}
+                    leftIcon={
+                        <FontAwesome5
+                          name='at'
+                          size={25}
+                          color='#369fe0'
+                        />
+                    }
+                    leftIconContainerStyle = {{marginRight: 10}}
+                    containerStyle = {styles.input}
                     
                 />
-                <View style={{margin:7}} />
-                <Button 
-                          onPress={this.register.bind(this)}
-                          title="Registrarse"
-                      />
+                <View style={styles.container_button}>
+                <FontAwesome5.Button name="user-plus" backgroundColor = '#369fe0'
+                        onPress={this.register.bind(this)}>
+                            <Text style={styles.text_button}>
+                                Registrarse
+                            </Text>
+                    </FontAwesome5.Button>
+                    </View>
             </View>
             )
     }
@@ -168,16 +227,27 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      //padding: 20
       //backgroundColor: '#ecf0f1',
     },
     input: {
      // width: 200,
      // height: 44,
-     // padding: 10,
+      padding: 10,
      // borderWidth: 1,
-     // borderColor: 'black',
-     // marginBottom: 10,
+     // borderColor: 'red',
+      marginBottom: 5,
     },
+    text_button: {
+        fontSize: 15,
+        color: 'white',
+        
+    },
+    container_button: {
+        marginTop:5,
+        marginBottom: 10,
+        width: 200
+    }
   });
 
 export default (Register);

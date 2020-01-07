@@ -16,7 +16,7 @@ class ScannerScreen extends React.PureComponent {
   }
 
   static navigationOptions = {
-    title: 'Bar Scanner',
+    title: 'Escanear codigo',
     headerTintColor: '#FFF',
         headerStyle: {
             backgroundColor: '#369fe0',
