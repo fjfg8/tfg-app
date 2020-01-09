@@ -16,6 +16,7 @@ import Products from "./views/Products";
 import ProductDetails from "./views/ProductDetails"
 import Cart from "./views/Cart"
 import Register from "./views/Register"
+import Orders from "./views/Orders"
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ScannerScreen from "./views/ScannerScreen";
@@ -50,6 +51,14 @@ CartStack.navigationOptions = {
   tabBarLabel: 'Carrito',
 };
 
+const OrdersStack = createStackNavigator({
+  Orders: {screen: Orders},
+  //ProductDetails: {screen: ProductDetails}
+})
+OrdersStack.navigationOptions = {
+  tabBarLabel: 'Orders',
+};
+
 const ScannerStack = createStackNavigator({
   Scanner: {screen: ScannerScreen},
   ProductDetails: {screen: ProductDetails}
@@ -62,6 +71,7 @@ const MainTabs = createBottomTabNavigator({
   Home: MainStack,
   Products: ProductsStack,
   Scan: ScannerStack,
+  Orders: OrdersStack,
   Cart: CartStack
   
 },
@@ -83,6 +93,9 @@ const MainTabs = createBottomTabNavigator({
       }
       else if (routeName === 'Scan') {
         iconName = `barcode`
+      }
+      else if (routeName === 'Orders') {
+        iconName = 'truck'
       }
 
       // You can return any component that you like here!
