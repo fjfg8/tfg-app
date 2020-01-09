@@ -19,6 +19,8 @@ class CustomRowCart extends React.PureComponent {
            headers: {
                Accept: 'application/json',
                'Content-Type': 'application/json',
+               'token': this.props.token,
+               'userid': this.props.userid
            },
            body: JSON.stringify({
                userid: this.props.userid,

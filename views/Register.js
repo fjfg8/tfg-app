@@ -65,7 +65,8 @@ class Register extends React.PureComponent {
                     password: this.state.password,
                     nombre: this.state.nombre,
                     apellidos: this.state.apellidos,
-                    email: this.state.email
+                    email: this.state.email,
+                    isAdmin: 0
                 }),
             })//then((resp)=>{ return resp.text() }).then((text)=>{ console.log(text) })
             .then((response)=>{
@@ -97,7 +98,7 @@ class Register extends React.PureComponent {
                     autoCapitalize="none" 
                     autoCorrect={false}
                     onChangeText={(nick) => this.setState({ nick })}
-                    placeholder={'Username'}
+                    placeholder={'Nick'}
                     returnKeyType="next"
                     onSubmitEditing={this.nextFieldFocus}
                     leftIcon={

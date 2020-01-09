@@ -70,7 +70,14 @@ class Cart extends React.PureComponent {
     getCartProducts() {
         const url = 'https://tfg-apirest.herokuapp.com/user/' + this.state.userid +'/cart'
 
-        fetch(url)
+        fetch(url, {
+          method: 'GET',
+          headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'token': this.state.token
+          },
+      })
         .then(response => response.json())
         .then((responseJson)=> {
           this.setState({
@@ -84,7 +91,14 @@ class Cart extends React.PureComponent {
     updateProducts() {
         const url = 'https://tfg-apirest.herokuapp.com/user/' + this.state.userid +'/cart'
 
-        fetch(url)
+        fetch(url, {
+          method: 'GET',
+          headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'token': this.state.token
+          },
+      })
         .then(response => response.json())
         .then((responseJson)=> {
           this.setState({
@@ -98,8 +112,15 @@ class Cart extends React.PureComponent {
     renderItem(data) {
         const { navigate } = this.props.navigation
         var item = data.item
-        return <TouchableOpacity onPress={() => {navigate('ProductDetails', {item})}}>
-        <CustomRowCart updateCart={this.updateProducts} userid={this.state.userid} id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio} amount={data.item.cantidad}/>
+        return <TouchableOpacity activeOpacity={0.8} onPress={() => {navigate('ProductDetails', {item})}}>
+        <CustomRowCart updateCart={this.updateProducts}
+        userid={this.state.userid}
+        id={data.item.producto_id}
+        title={data.item.nombre}
+        image_url={data.item.image_uri}
+        pvp={data.item.precio}
+        amount={data.item.cantidad}
+        token={this.state.token}/>
         </TouchableOpacity>
     }
 
@@ -119,21 +140,24 @@ class Cart extends React.PureComponent {
 
     addProductsToStats() {
       var list = this.state.productsList
+      var tkid = [this.state.token, this.state.userid]
       console.log(list[0])
       //console.log(list.item.userid)
       list.forEach(function(item) {
-        console.log(item.id_usuario)
+        
         fetch('https://tfg-apirest.herokuapp.com/products/stats', {
            method: 'POST',
            headers: {
                Accept: 'application/json',
                'Content-Type': 'application/json',
+               'token': tkid[0],
+               'userid': tkid[1]
            },
            body: JSON.stringify({
                userid: item.id_usuario,
                productid: item.id_producto,
                cantidad: item.cantidad,
-               fecha: "20-01-15 20:21:24"
+               fecha: "20-01-15 20:21:24"//Metodo de añadir fecha
            }),
        })
        .then((response)=>{
@@ -143,7 +167,7 @@ class Cart extends React.PureComponent {
        .catch((error) => {
            console.error(error);
          });
-      })
+      }, tkid)
     }
 
     render() {

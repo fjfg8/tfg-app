@@ -96,7 +96,15 @@ class Products extends React.PureComponent {
     }
 
     getProducts() {
-        fetch('https://tfg-apirest.herokuapp.com/products')
+        fetch('https://tfg-apirest.herokuapp.com/products', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'token': this.state.token,
+                'userid': this.state.userid
+            },
+        })
         .then(response => response.json())
         .then((responseJson)=> {
           this.setState({
@@ -110,7 +118,15 @@ class Products extends React.PureComponent {
     }
 
     getCategories() {
-        fetch('https://tfg-apirest.herokuapp.com/categories')
+        fetch('https://tfg-apirest.herokuapp.com/categories', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'token': this.state.token,
+                'userid': this.state.userid
+            },
+        })
         .then(response => response.json())
         .then((responseJson)=> {
           this.setState({
@@ -178,8 +194,13 @@ class Products extends React.PureComponent {
     renderItem(data) {
         const { navigate } = this.props.navigation
         var item = data.item
-        return <TouchableOpacity onPress={() => {navigate('ProductDetails', {item})}}>
-        <CustomRowVertical userid={this.state.userid} id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio}/>
+        return <TouchableOpacity activeOpacity={0.8} onPress={() => {navigate('ProductDetails', {item})}}>
+        <CustomRowVertical userid={this.state.userid}
+        id={data.item.producto_id}
+        title={data.item.nombre}
+        image_url={data.item.image_uri}
+        pvp={data.item.precio}
+        token={this.state.token}/>
         </TouchableOpacity>
     }
 

@@ -50,16 +50,25 @@ class Home extends React.PureComponent {
 
     async _getToken() {
         try {
-            this.state.token = await SecureStore.getItemAsync("token");
+            this.state.token = await SecureStore.getItemAsync("token")
             this.state.userid = await SecureStore.getItemAsync("id") 
+            //console.log(this.state.token)
           } catch(e) {
             console.error(e);
           }
     }
 
     getProducts() {
+        
         const url = 'https://tfg-apirest.herokuapp.com/user/' + this.state.userid +'/products-stats-cantidad'
-        fetch(url)
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'token': this.state.token
+            },
+        })
         .then(response => response.json())
         .then((responseJson)=> {
           this.setState({
@@ -71,7 +80,14 @@ class Home extends React.PureComponent {
     }
     getProducts2() {
         const url = 'https://tfg-apirest.herokuapp.com/user/' + this.state.userid +'/products-stats-fecha'
-        fetch(url)
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'token': this.state.token
+            },
+        })
         .then(response => response.json())
         .then((responseJson)=> {
           this.setState({
@@ -87,7 +103,13 @@ class Home extends React.PureComponent {
         const { navigate } = this.props.navigation
         var item = data.item
         return <TouchableOpacity activeOpacity={0.8} onPress={() => {navigate('ProductDetails', {item})}} style={styles.itemflatlist}>
-        <CustomRow userid={this.state.userid} id={data.item.producto_id} title={data.item.nombre} image_url={data.item.image_uri} pvp={data.item.precio}/>
+        <CustomRow userid={this.state.userid}
+        id={data.item.producto_id}
+        title={data.item.nombre}
+        image_url={data.item.image_uri}
+        pvp={data.item.precio}
+        token = {this.state.token}
+        />
         </TouchableOpacity>        
             
     }

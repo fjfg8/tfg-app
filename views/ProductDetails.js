@@ -54,6 +54,8 @@ class ProductDetails extends React.PureComponent {
                headers: {
                    Accept: 'application/json',
                    'Content-Type': 'application/json',
+                   'token': this.state.token,
+                   'userid': this.state.userid
                },
                body: JSON.stringify({
                    userid: this.state.userid,

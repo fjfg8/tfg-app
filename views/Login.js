@@ -88,7 +88,7 @@ class Login extends React.PureComponent {
                     autoCapitalize="none" 
                     autoCorrect={false}
                     onChangeText={(user) => this.setState({ user })}
-                    placeholder='Username'
+                    placeholder='Nick'
                     returnKeyType="next"
                     onSubmitEditing={this.nextFieldFocus}
                     //underlineColorAndroid = '#369fe0'
