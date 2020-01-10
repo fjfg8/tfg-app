@@ -44,6 +44,8 @@ class CustomRowCart extends React.PureComponent {
            headers: {
                Accept: 'application/json',
                'Content-Type': 'application/json',
+               'token': this.props.token,
+               'userid': this.props.userid
            },
            body: JSON.stringify({
                userid: this.props.userid,
@@ -62,8 +64,10 @@ class CustomRowCart extends React.PureComponent {
     }
 
     //const CustomRowVertical = ({userid, id, title, image_url, pvp }) => 
+    multiplicar (a, b ) { return a * b }
 
     render() {
+        var total = this.props.pvp*this.props.amount
         return(
         <View style={styles.container}>
             
@@ -73,10 +77,8 @@ class CustomRowCart extends React.PureComponent {
                     {this.props.title} 
                 </Text>
                 <Text style={styles.pvp}>
-                    {this.props.pvp} € 
-                </Text>
-                <Text style={styles.pvp}>
-                    {this.props.amount}  
+                    
+                    {this.props.pvp}€ x {this.props.amount}ud/s = {total.toFixed(2)}€
                 </Text>
             </View>
             <View style={styles.container_button}>

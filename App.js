@@ -17,6 +17,7 @@ import ProductDetails from "./views/ProductDetails"
 import Cart from "./views/Cart"
 import Register from "./views/Register"
 import Orders from "./views/Orders"
+import ProductOrders from "./views/ProductOrders"
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ScannerScreen from "./views/ScannerScreen";
@@ -53,7 +54,8 @@ CartStack.navigationOptions = {
 
 const OrdersStack = createStackNavigator({
   Orders: {screen: Orders},
-  //ProductDetails: {screen: ProductDetails}
+  ProductOrders: {screen: ProductOrders},
+  ProductDetails: {screen: ProductDetails}
 })
 OrdersStack.navigationOptions = {
   tabBarLabel: 'Orders',

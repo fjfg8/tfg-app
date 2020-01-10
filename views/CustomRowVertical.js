@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Button,Alert,TouchableOpacity } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import NumericInput from 'react-native-numeric-input'
 
 class CustomRowVertical extends React.PureComponent {
 
     constructor(props) {
         super(props)
         this.state = {
+            value: 1
             }
 
         
@@ -25,7 +27,7 @@ class CustomRowVertical extends React.PureComponent {
            body: JSON.stringify({
                userid: this.props.userid,
                productid: this.props.id,
-               cantidad: "1"
+               cantidad: this.state.value
            }),
        })
        .then((response)=>{
@@ -54,7 +56,13 @@ class CustomRowVertical extends React.PureComponent {
                 </Text>
             </View>
             <View style={styles.container_button}>
-            <TouchableOpacity onPress={() => {this.addProductCart()}}>
+            <NumericInput value={this.state.value} onChange={value => this.setState({value})} rounded textColor='#2a92d1' 
+                    iconStyle={{ color: 'white' }} 
+                    rightButtonBackgroundColor='#369fe0' 
+                    leftButtonBackgroundColor='#74bce8'
+                    minValue={1}
+                    totalHeight={35}/>
+            <TouchableOpacity style={styles.buttonS} onPress={() => {this.addProductCart()}}>
                     <FontAwesome5 name="cart-plus" size={25} color="#369fe0"  />
                     </TouchableOpacity>  
             </View>
@@ -103,11 +111,10 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         //marginLeft: 12,
         justifyContent: 'center',
+        alignItems: 'flex-end'
     },
     buttonS: {
-       // height: 50,
-       // width: 50,
-       // alignSelf: "center",
+       marginTop: 8
     },
 });
 

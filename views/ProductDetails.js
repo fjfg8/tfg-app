@@ -88,6 +88,11 @@ class ProductDetails extends React.PureComponent {
                         {this.state.product.precio} €
                     </Text>
                 </View>
+                <View style={styles.container_text}>
+                    <Text style={styles.description}>
+                        {this.state.product.descripcion}
+                    </Text>
+                </View>
                 <View style={styles.container_buttons}>
                 <NumericInput value={this.state.value} onChange={value => this.setState({value})} rounded textColor='#2a92d1' 
                     iconStyle={{ color: 'white' }} 
@@ -131,8 +136,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     description: {
-        fontSize: 11,
+        fontSize: 14,
         fontStyle: 'italic',
+        justifyContent: 'space-around'
     },
     photo: {
         alignSelf: "center",
@@ -140,6 +146,7 @@ const styles = StyleSheet.create({
         width: 200,
     },
     container_buttons: {
+        marginTop: 20,
         flexDirection: 'row',
         justifyContent: 'space-around'
     },

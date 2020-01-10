@@ -13,6 +13,7 @@ import {
 import * as SecureStore from 'expo-secure-store';
 import CustomRow from "./CustomRow"
 import { ScrollView } from "react-native-gesture-handler";
+import { withNavigationFocus } from 'react-navigation';
 
 
 
@@ -58,7 +59,18 @@ class Home extends React.PureComponent {
           }
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.isFocused !== this.props.isFocused) {
+          // Use the `this.props.isFocused` boolean
+          // Call any action
+          this.getProducts()
+          this.getProducts2()
+          
+        }
+      }
+
     getProducts() {
+        //this.setState({loading: true})
         
         const url = 'https://tfg-apirest.herokuapp.com/user/' + this.state.userid +'/products-stats-cantidad'
         fetch(url, {
@@ -79,6 +91,7 @@ class Home extends React.PureComponent {
         .catch(error=>console.log(error)) //to catch the errors if any
     }
     getProducts2() {
+        //this.setState({loading2: true})
         const url = 'https://tfg-apirest.herokuapp.com/user/' + this.state.userid +'/products-stats-fecha'
         fetch(url, {
             method: 'GET',
@@ -161,7 +174,7 @@ const styles = StyleSheet.create({
     },
 })
 
-export default (Home);
+export default withNavigationFocus(Home);
 /*.sort(function(a,b) {
                         return new Date(b.fecha).getTime() - new Date(a.fecha).getTime();
                     })}*/

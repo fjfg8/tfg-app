@@ -3,6 +3,7 @@ import { Alert, View, Text, Vibration, StyleSheet, ActivityIndicator } from 'rea
 import { Camera } from 'expo-camera'
 import * as Permissions from 'expo-permissions'
 import { BarCodeScanner } from 'expo-barcode-scanner'
+import * as SecureStore from 'expo-secure-store';
 
 export class ExpoScanner extends React.PureComponent {
   constructor(props) {
@@ -20,12 +21,29 @@ export class ExpoScanner extends React.PureComponent {
     };
   }
 
-    componentDidMount() { 
+    async componentDidMount() { 
+      await this._getToken()
         this.getProducts()  
     }
+    async _getToken() {
+      try {
+          this.state.token = await SecureStore.getItemAsync("token");
+          this.state.userid = await SecureStore.getItemAsync("id")
+        } catch(e) {
+          console.error(e);
+        }
+  }
 
     getProducts() {
-        fetch('https://tfg-apirest.herokuapp.com/products')
+        fetch('https://tfg-apirest.herokuapp.com/products', {
+          method: 'GET',
+          headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'token': this.state.token,
+              'userid': this.state.userid
+          },
+      })
         .then(response => response.json())
         .then((responseJson)=> {
         this.setState({

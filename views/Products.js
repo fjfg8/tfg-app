@@ -214,7 +214,9 @@ class Products extends React.PureComponent {
 
     renderCategoryItemPop(data) {
         var item = data.item
-        return <MenuOption onSelect={() => this.filterByCategoryFunction(data.item.categoria_id)} text={data.item.nombre} />
+        return <MenuOption onSelect={() => this.filterByCategoryFunction(data.item.categoria_id)}>
+            <Text style={styles.title_style}>{data.item.nombre}</Text>
+        </MenuOption>  
     }
 
 
@@ -260,6 +262,11 @@ class Products extends React.PureComponent {
                             <FontAwesome5 name="filter" size={25} color="#369fe0" style={{marginLeft: 10}} />
                             </MenuTrigger>
                             <MenuOptions>
+                            <MenuOption onSelect={() => this.filterByCategoryFunction(0)}>
+                                 <Text style={styles.title_style}>
+                                 Todos los productos
+                                </Text>
+                            </MenuOption>
                             <FlatList
                                 data={this.state.categoriesList}
                                 renderItem={item=> this.renderCategoryItemPop(item)}
@@ -341,6 +348,11 @@ const styles = StyleSheet.create({
        // width: 50,
        // alignSelf: "center",
     },
+    title_style: {
+        fontSize: 20,
+          color: '#369fe0',
+          fontWeight : 'bold'
+      }
 });
 
 export default (Products);
